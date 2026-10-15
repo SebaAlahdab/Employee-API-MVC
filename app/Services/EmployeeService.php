@@ -10,6 +10,14 @@ class EmployeeService
     {
         return Employee::all();
     }
+    public function getEmployeeById($id)
+    {
+        return Employee::findOrFail($id);
+    }
+    public function getEmployeeByEmail($email)
+    {
+        return Employee::where('email', $email)->firstOrFail();
+    }
 
     public function createEmployee(array $data)
     {
