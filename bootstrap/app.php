@@ -10,6 +10,8 @@
 | the IoC container for the system binding all of the various parts.
 |
 */
+use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Foundation\Configuration\Middleware; 
 
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
