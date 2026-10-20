@@ -54,7 +54,6 @@ public function login(AuthLoginValidate $request)
 public function show()
     {
         $user = $this->authService->getAllUsers();
-
         return response()->json($user, 200);
     }
 }

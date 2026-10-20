@@ -32,6 +32,20 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
+    public function render($request, Throwable $exception)
+{
+    if ($request->is('api/*')) {
+        $response = parent::render($request, $exception);
+
+        return response()->json([
+            'message' => $response->getStatusCode() === 500
+                ? 'You must log in first.'
+                : 'An error occurred.',
+        ], $response->getStatusCode());
+    }
+
+    return parent::render($request, $exception);
+}
     public function register()
     {
         $this->reportable(function (Throwable $e) {
