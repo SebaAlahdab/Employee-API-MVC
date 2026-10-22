@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Exceptions;
-
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -45,6 +45,14 @@ class Handler extends ExceptionHandler
     }
 
     return parent::render($request, $exception);
+}
+protected function invalidJson($request, ValidationException $exception)
+{
+    return response()->json([
+        'success' => false,
+        'message' => ' failed.',
+        'errors' => $exception->errors(),
+    ], $exception->status);
 }
     public function register()
     {

@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthValidate;
 use App\Services\AuthService;
 use App\Http\Requests\AuthLoginValidate;
+use App\Traits\ApiResponse;
 class AuthController extends Controller
 {
+    use ApiResponse;
+
     protected $authService;
 
     public function __construct(AuthService $authService)
@@ -20,15 +23,10 @@ class AuthController extends Controller
             $request->validated()
         );
 
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-            ],
-        ], 201);
+         return $this->successResponse(
+            $user,
+            'user registered successfully'
+        );
     }
 
     //POST log in 
@@ -54,7 +52,10 @@ public function login(AuthLoginValidate $request)
 public function show()
     {
         $user = $this->authService->getAllUsers();
-        return response()->json($user, 200);
+         return $this->successResponse(
+            $user,
+            'users retrived successfully'
+        );
     }
 }
    

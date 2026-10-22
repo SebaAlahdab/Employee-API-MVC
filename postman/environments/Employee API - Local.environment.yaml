@@ -1,0 +1,12 @@
+name: Employee API - Local
+values:
+  - key: base_url
+    value: ''
+  - key: auth_token
+    value: ''
+  - key: employee_id
+    value: ''
+  - key: test_email
+    value: ''
+  - key: test_password
+    value: ''

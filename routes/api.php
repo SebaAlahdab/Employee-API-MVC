@@ -12,7 +12,6 @@ Route::post('/login', [AuthController::class, 'login']);
 // Authenticated users: user and admin
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/employees/email', [EmployeeController::class, 'showByEmail']);
     Route::get('/employees/{id}', [EmployeeController::class, 'show']);
     Route::get('/employees', [EmployeeController::class, 'index']);
 

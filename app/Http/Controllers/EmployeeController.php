@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidateEmployeeRequest;
 use App\Services\EmployeeService;
-use Illuminate\Http\Request;
-
+use App\Traits\ApiResponse;
 class EmployeeController extends Controller
 {
+    use ApiResponse;
     public  $employeeService;
 
     public function __construct(EmployeeService $employeeService)
@@ -20,7 +20,10 @@ class EmployeeController extends Controller
     {
         $employees = $this->employeeService->getAllEmployees();
 
-        return response()->json($employees, 200);
+         return $this->successResponse(
+            $employees,
+            'Employees retrieved successfully'
+        );
     }
 
     // GET /api/employees/{id}
@@ -28,23 +31,12 @@ class EmployeeController extends Controller
     {
         $employee = $this->employeeService->getEmployeeById($id);
 
-        return response()->json($employee, 200);
+        return $this->successResponse(
+            $employee,
+            'Employee retrieved successfully'
+        );
     }
     
-    // GET /api/employees/email?email=john@example.com
-        public function showByEmail(Request $request)
-        {
-            $request->validate([
-                'email' => 'required|email',
-            ]);
-
-            $email = $request->query('email');
-
-            $employee = $this->employeeService->getEmployeeByEmail($email);
-
-            return response()->json($employee, 200);
-        }
-
     // POST /api/employees
     public function store(ValidateEmployeeRequest $request)
     {
@@ -52,6 +44,9 @@ class EmployeeController extends Controller
 
         $employee = $this->employeeService->createEmployee($validatedData);
 
-        return response()->json($employee, 201);
+         return $this->successResponse(
+            $employee,
+            'Employee stored successfully'
+        );
     }
 }
